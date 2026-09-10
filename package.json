@@ -1,0 +1,22 @@
+{
+  "name": "keith-janish-portfolio",
+  "version": "1.0.8",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node scripts/generate.js && vite --host 0.0.0.0",
+    "build": "node scripts/generate.js && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "dev:cloudflare": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "deploy:pages": "npm run build && wrangler pages deploy dist",
+    "check": "node scripts/check.js && node scripts/check-filters.js && node scripts/check-carousel.js"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1",
+    "wrangler": "^4.70.0"
+  }
+}
