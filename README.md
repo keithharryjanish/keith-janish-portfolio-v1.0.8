@@ -1,4 +1,4 @@
-> **Corrected package v1.0.8.** Start with `START_HERE.md`. Extract into a new folder and use the Vite URL printed by `npm run dev`.
+> **Corrected package v1.0.9.** Start with `START_HERE.md`. Extract into a new folder and use the Vite URL printed by `npm run dev`.
 
 # Keith Janish — Gameplay Programmer Portfolio
 
@@ -158,7 +158,7 @@ video: {type: 'file', src: '/media/my-trailer.mp4', mime: 'video/mp4', title: 'P
 
 ## Appearance and artwork
 
-Version 1.0.8 restores the supplied screenshot's near-black background, orange accents, Barlow Condensed headline, and rectangular portrait. The source hero reads “I build the systems behind the play.” The corresponding dark styling carries through navigation, filters, project pages, and contact.
+Version 1.0.9 updates the supplied screenshot's neutral charcoal background, muted crimson accents, Barlow Condensed headline, and rectangular portrait. The source hero reads “I build the systems behind the play.” The corresponding dark styling carries through navigation, filters, project pages, and contact.
 
 Both project images remain the exact supplied Clockwork Trials title card and Operation Station trailer artwork. Artwork fills consistent 16:9 frames using proportional cover scaling; detail captions appear below the image. Video player sizing remains independent.
 
@@ -168,4 +168,4 @@ Run `npm run check` after building to check local assets, links, video configura
 
 The project row shows two cards at a time above 760px, and one on smaller screens. Use the arrow buttons, horizontal swipe/trackpad, or focus the row and use Left/Right, Home, and End. Arrows are disabled when there are no additional cards in that direction. With the current two projects, both fit on desktop. Filtering resets the scroll position and updates the range and arrow states.
 
-The project introduction sentence has been removed. Versioned dark/orange SVG and ICO favicon URLs replace the old icon, with an Apple touch icon and a default favicon.ico fallback.
+The project introduction sentence has been removed. Versioned dark/white/crimson SVG and ICO favicon URLs replace the old icon, with an Apple touch icon and a default favicon.ico fallback.

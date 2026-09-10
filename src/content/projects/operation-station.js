@@ -2,7 +2,7 @@ export const tags = ['Unity','C#','Gameplay systems','Systems design','Prototype
 
 export default {
  slug:'operation-station', number:'01', title:'Operation Station', shortTitle:'Operation\nStation',
- status:'Released', engine:'Unity', language:'C#', kind:'Midterm Project', genre:'Systems / strategy prototype', platform:'PC · itch.io',
+ status:'Released', engine:'Unity', language:'C#', kind:'Independent prototype', genre:'Systems / strategy prototype', platform:'PC · itch.io',
  role:'Gameplay Programmer / Systems Designer',
  summary:'Build the station. Manage the threat. Fire the super weapon.',
  description:'A systems-driven Unity prototype about building, defending, and operating a station-sized super weapon.',
@@ -26,5 +26,5 @@ export default {
  goals:['Make the objective immediately understandable.','Keep interactions fast while maintaining interlocking systems.','Demonstrate practical Unity and C# implementation through a complete playable prototype.'],
  technical:['Gameplay code is organized around clear systems and state changes.','Player actions, objective progress, and station state connect through readable feedback.','The compact scope supports a complete loop and a public build for hands-on review.'],
  focus:'A complete, compact prototype showing how clear objectives and connected gameplay systems can make a small scope feel purposeful.',
- developers:['Keith Janish', 'Christian Nelson', 'Alexander Swanson', "Erick Marin"], company:'Midterm Project', publisher:'Self-published on itch.io'
+ developers:['Keith Janish'], company:'Independent project', publisher:'Self-published on itch.io'
 };
