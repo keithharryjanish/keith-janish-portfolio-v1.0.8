@@ -50,7 +50,7 @@ try {
   assert(detail.includes('id="gallery"') && detail.includes('Details &lt;and&gt; images'));
   assert(detail.includes('class="video-launch"'));
   assert(detail.includes(mediaUrl('clockwork-trials.png')), 'Copied gallery and custom poster resolve');
-  assert(!homepage.includes('carousel-progress'));
+  assert(homepage.includes('data-carousel-progress'));
   for (const html of [homepage, detail]) {
     for (const [, src] of html.matchAll(/<img[^>]+src="([^"]+)"/g)) {
       assert(src.startsWith('/media/'), `Image must work from every route: ${src}`);

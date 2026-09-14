@@ -61,10 +61,10 @@ jobs:
               };
             });
             assert.equal(styles.radius, '0px');
-            assert.equal(styles.borderTop, '1px');
+            assert.equal(styles.borderTop, '3px');
             assert.equal(styles.scrollbar, 'none');
-            assert.equal(styles.progress, 0);
-            assert.equal(await page.locator('#projects .accent-line').count(), 0);
+            assert.equal(styles.progress, 1);
+            assert.equal(await page.locator('#projects .accent-line').count(), 1);
             assert.equal(styles.gradient, 'none');
             assert.equal(styles.background, 'rgb(29, 29, 32)');
             assert(styles.headingFont.includes('Barlow Condensed'));
