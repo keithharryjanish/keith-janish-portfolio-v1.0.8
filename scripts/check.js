@@ -3,7 +3,7 @@ import {resolve,join} from 'node:path';
 import assert from 'node:assert/strict';
 import {projects} from '../src/content/projects.js';
 const root=resolve('dist');
-const routes=['/','/projects/operation-station/','/projects/clockwork-trials/','/404.html'];
+const routes=['/',...projects.map(p => `/projects/${p.slug}/`),'/404.html'];
 let checked=0;
 for(const route of routes){
  const file=join(root,route.endsWith('/')?route+'index.html':route);
@@ -31,13 +31,12 @@ console.log(`PASS: ${routes.length} routes, ${checked} local asset/link referenc
 const {allProjectTags, projectTags, matchesTag, projectVideo} = await import('../src/lib/projects.js');
 const {project: renderProject} = await import('../src/templates/project.js');
 for (const tag of allProjectTags(projects)) {
- assert(projects.some(p => matchesTag(projectTags(p), tag)), `Tag ${tag} must have results`);
+ assert.deepEqual(
+  projects.filter(p => matchesTag(projectTags(p), tag)),
+  projects.filter(p => projectTags(p).includes(tag))
+ );
 }
 assert(projects.every(p => matchesTag(projectTags(p), '')));
-assert.deepEqual(projects.filter(p => matchesTag(projectTags(p), 'Unity')).map(p => p.slug), ['operation-station']);
-assert.deepEqual(projects.filter(p => matchesTag(projectTags(p), 'Unreal Engine')).map(p => p.slug), ['clockwork-trials']);
-assert.deepEqual(projects.filter(p => matchesTag(projectTags(p), 'C++')).map(p => p.slug), ['clockwork-trials']);
-assert.equal(projects.filter(p => matchesTag(projectTags(p), 'Unknown')).length, 0);
 for (const p of projects) {
  const html = renderProject(p);
  assert.equal(html.includes('id="video"'), Boolean(projectVideo(p)));

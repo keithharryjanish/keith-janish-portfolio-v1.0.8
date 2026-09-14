@@ -92,7 +92,7 @@ For Pages Git integration, use build command `npm run build` and output director
 | `vite.config.js` | Build entrypoints and content live-reload |
 | `wrangler.jsonc` | Your Cloudflare Worker name and static asset settings |
 
-Edit the source `.js` files, not generated `site/index.html`, generated project HTML, or `dist/`. Production HTML is pre-rendered from the content modules during each build. To add another project, create a content file, register it in `projects.js`, and add its HTML entry to `vite.config.js`.
+Edit the source `.js` files, not generated `site/index.html`, generated project HTML, or `dist/`. Production HTML is pre-rendered from the content modules during each build. To add another project, create a content file, register it in `projects.js`, and rebuild. Its homepage card, full project page, filters, numbering, and Next project navigation are generated automatically. No Vite configuration changes are needed.
 
 The résumé PDF is the exact uploaded document, renamed for a clean download link. Its separate Unity capstone experience is not attributed to Clockwork Trials. Project descriptions and team credits follow the supplied brief. M.S. graduation is labeled **expected July 2027**.
 
@@ -169,3 +169,36 @@ Run `npm run check` after building to check local assets, links, video configura
 The project row shows two cards at a time above 760px, and one on smaller screens. Use the arrow buttons, horizontal swipe/trackpad, or focus the row and use Left/Right, Home, and End. Arrows are disabled when there are no additional cards in that direction. With the current two projects, both fit on desktop. Filtering resets the scroll position and updates the range and arrow states.
 
 The project introduction sentence has been removed. Versioned dark/white/crimson SVG and ICO favicon URLs replace the old icon, with an Apple touch icon and a default favicon.ico fallback.
+
+
+## Add a project
+
+1. Copy `src/content/projects/operation-station.js` to a new file, such as `src/content/projects/my-new-game.js`.
+2. Replace its content and use a unique lowercase, hyphenated slug, such as `my-new-game`. Put artwork in `public/media/` and reference it as `/media/my-new-game.png`. Set `video: null` if it has no video.
+3. Register the file in **src/content/projects.js**:
+
+```js
+import operation from './projects/operation-station.js';
+import clockwork from './projects/clockwork-trials.js';
+import myNewGame from './projects/my-new-game.js';
+
+export const projects = [operation, clockwork, myNewGame].map((project, index) => ({
+  ...project,
+  number: String(index + 1).padStart(2, '0')
+}));
+```
+
+This is the only registration step. List order controls display order and Next project links. Numbers are automatic, so the copied `number` value is ignored. Existing display tags and the filter whitelist remain separate: use an existing filter tag in the project to join that filter; edit `filter-tags.js` only when you intentionally want a new filter option.
+
+With `npm run dev` running, source additions and edits regenerate the pages. For production, run `npm run build` (or `npm run deploy`, which builds first). The generator removes stale generated project directories when a project is removed from the registry. Generated `site/projects/` pages are not a place for hand-written content.
+
+The build automatically includes every generated project page. The checks follow all registered routes, with no hard-coded two-project assumptions.
+
+## Project showcase update
+
+Two cards fit the desktop viewport; one fits mobile screens at 760px and below. The section uses consistent 16:9 artwork, numbered media labels, compact engine and release badges, fuller typography, rounded cards, and subtle hover motion. All-card links, independent clickable filter tags, video links, URL filters, keyboard browsing, swipe scrolling, and reduced-motion support remain available. The progress line shows how far through the filtered collection you have browsed.
+
+Design references:
+- [Fairground Studio project carousel](https://www.awwwards.com/inspiration/project-carousel-fairground-studio)
+- [W3C carousel controls and announcements](https://www.w3.org/WAI/tutorials/carousels/functionality/)
+- [Vite 7 multi-page builds](https://v7.vite.dev/guide/build.html#multi-page-app)

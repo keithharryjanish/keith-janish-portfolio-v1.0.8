@@ -13,7 +13,7 @@
     "dev:cloudflare": "npm run build && wrangler dev",
     "deploy": "npm run build && wrangler deploy",
     "deploy:pages": "npm run build && wrangler pages deploy dist",
-    "check": "node scripts/check.js && node scripts/check-filters.js && node scripts/check-carousel.js"
+    "check": "node scripts/check.js && node scripts/check-filters.js && node scripts/check-carousel.js && node scripts/check-project-registration.js"
   },
   "devDependencies": {
     "vite": "^7.3.1",

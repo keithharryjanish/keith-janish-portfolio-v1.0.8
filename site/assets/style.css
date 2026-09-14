@@ -78,3 +78,74 @@
 .project-card .project-tags a,.project-card .card-actions a{position:relative;z-index:2}
 .project-card:hover{border-color:var(--accent)}
 .project-card:focus-within{outline:2px solid var(--accent);outline-offset:-2px}
+
+
+/* Project showcase */
+.work .section-heading{margin-bottom:32px}
+.work .section-heading h2{font-size:clamp(3.5rem,6vw,5.75rem);line-height:1}
+.work .count{padding:6px 10px;border:1px solid var(--line);border-radius:8px;margin-top:8px}
+.work .filter-panel{padding:22px 0 26px;margin-bottom:0;background:transparent;border:0;border-top:1px solid var(--line)}
+.work .filter-heading{margin-bottom:14px}
+.work .filter-heading>span{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase}
+.work .filter-chips{gap:8px}
+.work .filter-chip{border-radius:8px;background:var(--panel);padding:10px 15px;gap:16px;min-height:44px}
+.work .filter-chip span{min-width:21px;text-align:center;border-radius:4px;background:#ffffff0a;opacity:1;color:var(--muted)}
+.work .filter-chip[aria-pressed=true]{background:var(--text);border-color:var(--text);color:var(--ink)}
+.work .filter-chip[aria-pressed=true] span{background:#18181b12;color:var(--ink)}
+.work .filter-chip:hover:not(:disabled){border-color:var(--accent)}
+.work .carousel-toolbar{padding-top:10px;margin-bottom:18px;min-height:62px}
+.carousel-label{font-size:.6875rem;letter-spacing:.16em;color:var(--muted);font-weight:650}
+.carousel-navigation{display:flex;align-items:center;gap:24px}
+.work .carousel-position{font-size:.8125rem;font-variant-numeric:tabular-nums}
+.work .carousel-button{width:48px;height:48px;border-radius:12px;background:var(--panel);border-color:var(--line);color:var(--text)}
+.work .carousel-button:hover:not(:disabled){background:var(--text);color:var(--ink);border-color:var(--text);transform:translateY(-2px)}
+.work .carousel-button:disabled{color:#77777f;background:transparent;border-color:#303035}
+.work .project-list{gap:24px;grid-auto-columns:calc((100% - 24px)/2);padding-bottom:0;scrollbar-width:none;border-radius:14px}
+.work .project-list::-webkit-scrollbar{display:none}
+.work .project-card{border:1px solid #424249;border-radius:14px;background:linear-gradient(145deg,#242428,#1b1b1e);transition:border-color .25s,background .25s;overflow:hidden}
+.work .project-card:hover,.work .project-card:focus-within{border-color:var(--accent)}
+.work .project-card:focus-within{outline-offset:-3px}
+.work .project-visual{aspect-ratio:16/9;border-bottom:1px solid #ffffff12;background:#101012}
+.work .project-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0005,transparent 35%,transparent 65%,#0004);pointer-events:none}
+.work .project-visual img{object-fit:cover;object-position:center;transition:transform .6s cubic-bezier(.2,.65,.3,1)}
+.work .project-card:hover .project-visual img,.work .project-card:focus-within .project-visual img{transform:scale(1.035)}
+.project-media-meta{position:absolute;top:18px;left:18px;right:18px;display:flex;align-items:center;justify-content:space-between;z-index:1}
+.project-number,.project-engine{background:#141416e8;border:1px solid #ffffff30;border-radius:6px;color:#fff;font-size:.6875rem;line-height:1;padding:10px 11px;letter-spacing:.08em;font-weight:600}
+.project-number{font-variant-numeric:tabular-nums}
+.project-open{position:absolute;right:18px;bottom:18px;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--text);color:var(--ink);z-index:1;font-size:1.5rem;transition:background .25s,transform .25s}
+.work .project-card:hover .project-open{background:var(--accent);transform:rotate(45deg)}
+.work .project-copy{padding:26px 28px 24px}
+.work .project-index{font-size:.6875rem;text-transform:uppercase;letter-spacing:.09em;gap:12px;min-height:26px}
+.work .project-index .release-badge{font-size:.6875rem;letter-spacing:.04em;border-radius:5px;padding:4px 8px;border-color:#ffffff1f;color:var(--text);white-space:nowrap}
+.work .project-copy h3{font-size:clamp(2.5rem,3.7vw,3.75rem);line-height:1.02;margin-top:16px;letter-spacing:-.01em;overflow-wrap:anywhere}
+.work .project-summary{font-size:.9375rem;line-height:1.7;margin-top:14px;max-width:46ch}
+.work .project-tags{gap:6px;margin:20px 0 25px}
+.work .project-tags li{border:0;background:#ffffff05;border-radius:5px}
+.work .project-tags a,.work .project-tags .display-tag{font-size:.6875rem;padding:6px 9px;border-radius:5px}
+.work .project-tags a{box-shadow:inset 0 0 0 1px #ffffff25}
+.work .project-tags a:hover{box-shadow:none}
+.work .project-tags .display-tag{color:#b3b3b8}
+.work .project-role{padding-top:18px;border-color:#ffffff16}
+.work .project-role>span{font-size:.625rem;letter-spacing:.14em}
+.work .project-role p{font-size:.8125rem;line-height:1.65;margin-top:6px}
+.work .card-actions{padding-top:18px;margin-top:18px;border-color:#ffffff16;gap:12px}
+.work .case-link{font-size:.8125rem;font-weight:650}
+.work .case-link span{font-size:1.25rem;transition:transform .2s}
+.work .project-card:hover .case-link span{transform:translate(2px,-2px)}
+.work .card-video{font-size:.75rem}
+.carousel-progress{height:2px;background:var(--line);margin-top:24px;overflow:hidden}
+.carousel-progress>span{display:block;height:100%;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+@media(max-width:760px){
+ .work .project-list{grid-auto-columns:100%;gap:20px}
+ .work .section-heading h2{font-size:3.5rem}
+ .work .project-copy{padding:23px}
+ .work .project-copy h3{font-size:3rem}
+ .carousel-navigation{gap:12px}
+ .carousel-label{display:none}
+ .work .carousel-navigation{width:100%;justify-content:space-between}
+ .work .filter-heading{flex-direction:row;flex-wrap:wrap;gap:8px}
+ .work .filter-chip{padding:9px 12px;gap:10px}
+ .project-media-meta{top:14px;left:14px;right:14px}
+ .project-open{right:14px;bottom:14px}
+}
+@media(prefers-reduced-motion:reduce){.work .project-card:hover .project-visual img,.work .project-card:focus-within .project-visual img,.work .project-card:hover .project-open,.work .carousel-button:hover:not(:disabled){transform:none}}
