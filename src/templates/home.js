@@ -11,11 +11,10 @@ function projectCard(p) {
  return `<article class="project-card ${e(p.slug)}" data-project-tags="${e(JSON.stringify(projectTags(p)))}">
   <a class="project-visual" href="/projects/${p.slug}/" tabindex="-1" aria-hidden="true">
    <img src="${e(p.image)}" alt="${e(p.imageAlt)}" loading="lazy" decoding="async">
-   <span class="project-media-meta"><span class="project-number">${e(p.number)}</span><span class="project-engine">${e(p.engine)}</span></span>
    <span class="project-open" aria-hidden="true">${arrow}</span>
   </a>
   <div class="project-copy">
-   <div class="project-index"><span>${e(p.kind)}</span><span class="release-badge">${e(p.status)}</span></div>
+   <div class="project-index"><span class="project-type"><span class="project-number">${e(p.number)}</span><span>${e(p.kind)}</span></span><span class="release-badge">${e(p.status)}</span></div>
    <h3><a class="project-card-link" href="/projects/${p.slug}/">${e(p.title)}</a></h3>
    <p class="project-summary">${e(p.summary)}</p>
    ${filterTags(p)}

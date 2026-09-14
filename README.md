@@ -196,7 +196,7 @@ The build automatically includes every generated project page. The checks follow
 
 ## Project showcase update
 
-Two cards fit the desktop viewport; one fits mobile screens at 760px and below. The section uses consistent 16:9 artwork, numbered media labels, compact engine and release badges, fuller typography, rounded cards, and subtle hover motion. All-card links, independent clickable filter tags, video links, URL filters, keyboard browsing, swipe scrolling, and reduced-motion support remain available. The progress line shows how far through the filtered collection you have browsed.
+Two cards fit the desktop viewport; one fits mobile screens at 760px and below. The section follows the rest of the site's charcoal panels, crimson accents, square edges, thin borders, Barlow Condensed headings, and DM Sans text. Consistent 16:9 artwork, restrained project numbering, a square image arrow, and subtle hover motion keep the project cards distinct within that shared style. All-card links, independent clickable filter tags, video links, URL filters, keyboard browsing, swipe scrolling, and reduced-motion support remain available. The progress line shows how far through the filtered collection you have browsed.
 
 Design references:
 - [Fairground Studio project carousel](https://www.awwwards.com/inspiration/project-carousel-fairground-studio)

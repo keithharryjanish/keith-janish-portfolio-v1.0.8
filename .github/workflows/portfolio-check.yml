@@ -18,3 +18,77 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run check
+      - name: Install browser for layout review
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Check layout and capture revision
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import {spawn} from 'node:child_process';
+          import {chromium} from 'playwright';
+          const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js','preview','--host','127.0.0.1','--port','4173','--strictPort']);
+          let browser;
+          try {
+            let ready = false;
+            for (let i = 0; i < 100; i++) {
+              try { ready = (await fetch('http://127.0.0.1:4173')).ok; } catch {}
+              if (ready) break;
+              await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            assert(ready, 'Preview server started');
+            browser = await chromium.launch();
+            const page = await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+            await page.goto('http://127.0.0.1:4173', {waitUntil:'networkidle'});
+            await page.evaluate(() => document.fonts.ready);
+            await page.locator('#projects').scrollIntoViewIfNeeded();
+            await page.locator('.project-visual img').evaluateAll(images => Promise.all(images.map(img => img.decode())));
+            const styles = await page.evaluate(() => {
+              const card = document.querySelector('.project-card');
+              const heading = document.querySelector('#projects h2');
+              const root = getComputedStyle(document.documentElement);
+              return {
+                background:getComputedStyle(card).backgroundColor,
+                panel:root.getPropertyValue('--panel').trim(),
+                radius:getComputedStyle(card).borderRadius,
+                headingFont:getComputedStyle(heading).fontFamily,
+                display:root.getPropertyValue('--display').trim(),
+                gradient:getComputedStyle(card).backgroundImage
+              };
+            });
+            assert.equal(styles.radius, '0px');
+            assert.equal(styles.gradient, 'none');
+            assert.equal(styles.background, 'rgb(29, 29, 32)');
+            assert(styles.headingFont.includes('Barlow Condensed'));
+            async function inView() {
+              return page.locator('#project-track').evaluate(track => {
+                const box = track.getBoundingClientRect();
+                return [...track.querySelectorAll('.project-card')].filter(card => {
+                  const rect = card.getBoundingClientRect();
+                  return !card.hidden && rect.right > box.left+2 && rect.left < box.right-2;
+                }).length;
+              });
+            }
+            assert.equal(await inView(), 2);
+            const screenshot = await page.locator('#projects').screenshot({type:'jpeg',quality:65});
+            console.log('PROJECT_PREVIEW_BASE64='+screenshot.toString('base64'));
+            await page.evaluate(() => window.scrollTo(0,0));
+            console.log('SITE_PREVIEW_BASE64='+(await page.screenshot({type:'jpeg',quality:55})).toString('base64'));
+            await page.locator('.filter-chip[data-filter="Unity"]').click();
+            assert.equal(await inView(), 1);
+            assert(new URL(page.url()).searchParams.get('tag') === 'Unity');
+            await page.locator('.filter-chip[data-filter=""]').click();
+            assert.equal(await inView(), 2);
+            await page.setViewportSize({width:390,height:844});
+            await page.locator('#projects').scrollIntoViewIfNeeded();
+            assert.equal(await inView(), 1);
+            assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+            await page.locator('[data-carousel-next]').click();
+            assert.match(await page.locator('[data-carousel-position]').textContent(), /2–2/);
+            console.log('PASS: desktop two-card layout, shared theme, filtering, mobile sizing and navigation.');
+          } finally {
+            await browser?.close();
+            server.kill();
+          }
+          JS
