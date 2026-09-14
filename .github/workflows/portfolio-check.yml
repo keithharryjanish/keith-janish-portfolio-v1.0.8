@@ -20,7 +20,7 @@ jobs:
       - run: npm run check
       - name: Install browser for layout review
         run: |
-          npm install --no-save --package-lock=false playwright pngjs
+          npm install --no-save --package-lock=false playwright
           npx playwright install --with-deps chromium
       - name: Check project layout in Chromium
         run: |
@@ -42,7 +42,6 @@ jobs:
             const page = await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
             await page.goto('http://127.0.0.1:4173', {waitUntil:'networkidle'});
             await page.evaluate(() => document.fonts.ready);
-            console.log('SAGE_PREVIEW_BASE64='+(await page.screenshot({type:'jpeg',quality:60})).toString('base64'));
             await page.locator('#projects').scrollIntoViewIfNeeded();
             await page.locator('.project-visual img').evaluateAll(images => Promise.all(images.map(img => img.decode())));
             const styles = await page.evaluate(() => {
@@ -88,54 +87,5 @@ jobs:
           } finally {
             await browser?.close();
             server.kill();
-          }
-          JS
-      - name: Prepare matching accent icon pixels
-        run: |
-          node --input-type=module <<'JS'
-          import {readFile} from 'node:fs/promises';
-          import assert from 'node:assert/strict';
-          import {PNG} from 'pngjs';
-          const from = [228,119,134], to = [168,184,159];
-          function recolor(data, stride=4, blueFirst=false) {
-            for(let i=0;i<data.length;i+=stride) {
-              const rIndex=i+(blueFirst?2:0), bIndex=i+(blueFirst?0:2);
-              const blend=Math.max(0,Math.min(1,(data[rIndex]-data[i+1])/(from[0]-from[1])));
-              if(!blend)continue;
-              data[rIndex]=Math.round(data[rIndex]+blend*(to[0]-from[0]));
-              data[i+1]=Math.round(data[i+1]+blend*(to[1]-from[1]));
-              data[bIndex]=Math.round(data[bIndex]+blend*(to[2]-from[2]));
-            }
-          }
-          function png(input) {
-            const decoded=PNG.sync.read(input);
-            recolor(decoded.data);
-            return PNG.sync.write(decoded);
-          }
-          function ico(input) {
-            assert.equal(input.readUInt16LE(2),1);
-            const count=input.readUInt16LE(4), directory=Buffer.from(input.subarray(0,6+16*count));
-            const frames=[];
-            let offset=directory.length;
-            for(let i=0;i<count;i++) {
-              const entry=6+16*i, size=input.readUInt32LE(entry+8), start=input.readUInt32LE(entry+12);
-              let frame=Buffer.from(input.subarray(start,start+size));
-              if(frame.readUInt32BE(0)===0x89504e47) frame=png(frame);
-              else {
-                const header=frame.readUInt32LE(0), width=frame.readInt32LE(4), height=Math.abs(frame.readInt32LE(8))/2;
-                assert.equal(frame.readUInt16LE(14),32,'ICO DIB depth');
-                assert.equal(frame.readUInt32LE(16),0,'Uncompressed ICO DIB');
-                recolor(frame.subarray(header,header+width*height*4),4,true);
-              }
-              directory.writeUInt32LE(frame.length,entry+8);
-              directory.writeUInt32LE(offset,entry+12);
-              offset+=frame.length;
-              frames.push(frame);
-            }
-            return Buffer.concat([directory,...frames]);
-          }
-          for(const path of ['public/apple-touch-icon-keith-v109.png','public/favicon-keith-v109.ico','public/favicon.ico']) {
-            const source=await readFile(path), output=path.endsWith('.ico')?ico(source):png(source);
-            console.log('SAGE_ICON='+JSON.stringify({path,content:output.toString('base64')}));
           }
           JS
