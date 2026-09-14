@@ -158,7 +158,7 @@ video: {type: 'file', src: '/media/my-trailer.mp4', mime: 'video/mp4', title: 'P
 
 ## Appearance and artwork
 
-Version 1.0.9 updates the supplied screenshot's neutral charcoal background, muted mauve accents, Barlow Condensed headline, and rectangular portrait. The source hero reads “I build the systems behind the play.” The corresponding dark styling carries through navigation, filters, project pages, and contact.
+Version 1.0.9 updates the supplied screenshot's neutral charcoal background, muted steel-blue accents, Barlow Condensed headline, and rectangular portrait. The source hero reads “I build the systems behind the play.” The corresponding dark styling carries through navigation, filters, project pages, and contact.
 
 Both project images remain the exact supplied Clockwork Trials title card and Operation Station trailer artwork. Artwork fills consistent 16:9 frames using proportional cover scaling; detail captions appear below the image. Video player sizing remains independent.
 
@@ -168,7 +168,7 @@ Run `npm run check` after building to check local assets, links, video configura
 
 The project row shows two cards at a time above 760px, and one on smaller screens. Use the arrow buttons, horizontal swipe/trackpad, or focus the row and use Left/Right, Home, and End. Arrows are disabled when there are no additional cards in that direction. With the current two projects, both fit on desktop. Filtering resets the scroll position and updates the range and arrow states.
 
-The project introduction sentence has been removed. Versioned dark/white/mauve SVG and ICO favicon URLs replace the old icon, with an Apple touch icon and a default favicon.ico fallback.
+The project introduction sentence has been removed. Versioned dark/white/steel-blue SVG and ICO favicon URLs replace the old icon, with an Apple touch icon and a default favicon.ico fallback.
 
 
 ## Add a project
@@ -196,7 +196,7 @@ The build automatically includes every generated project page. The checks follow
 
 ## Project showcase update
 
-Two cards fit the desktop viewport; one fits mobile screens at 760px and below. The section follows the rest of the site's charcoal panels, mauve accents, square edges, thin borders, Barlow Condensed headings, and DM Sans text. Consistent 16:9 artwork, restrained project numbering, a square image arrow, and subtle hover motion keep the project cards distinct within that shared style. All-card links, independent clickable filter tags, video links, URL filters, keyboard browsing, swipe scrolling, and reduced-motion support remain available. The range label and arrow controls indicate your position; the section heading accent line, decorative card accent strips and scrollbar lines are removed. Card borders remain neutral on hover.
+Two cards fit the desktop viewport; one fits mobile screens at 760px and below. The section follows the rest of the site's charcoal panels, steel-blue accents, square edges, thin borders, Barlow Condensed headings, and DM Sans text. Consistent 16:9 artwork, restrained project numbering, a square image arrow, and subtle hover motion keep the project cards distinct within that shared style. All-card links, independent clickable filter tags, video links, URL filters, keyboard browsing, swipe scrolling, and reduced-motion support remain available. The range label and arrow controls indicate your position; the section heading accent line, decorative card accent strips and scrollbar lines are removed. Card borders remain neutral on hover.
 
 Design references:
 - [Fairground Studio project carousel](https://www.awwwards.com/inspiration/project-carousel-fairground-studio)
@@ -212,8 +212,8 @@ After copying a project file, change its slug and register the import in `projec
 ```js
 image: '/media/my-new-game.png',       // Card artwork; default detail image/video poster
 imageAlt: 'My game title screen',
-detailImage: '/media/my-game-wide.png', // Optional; null reuses image
-detailImageAlt: 'A wide view of the level',
+heroImage: '/media/my-game-wide.png', // Hero at top of project detail page; null reuses image
+heroImageAlt: 'A wide view of the level',
 gallery: [
   {src: '/media/my-game-level.png', alt: 'The first level', caption: 'Exploring the first level.'},
   {src: '/media/my-game-menu.png', alt: 'Main menu'},
@@ -224,6 +224,8 @@ video: {
 },
 availability: 'Public playable prototype build',
 ```
+
+Set `heroImage` in each individual project file to a local image path or a direct HTTPS image URL. It changes only the large image at the top of that project’s detail page; `image` still controls its homepage card. Leave `heroImage: null` to reuse the card artwork. Existing `detailImage` / `detailImageAlt` fields still work for older project files, with `heroImage` taking priority when supplied.
 
 Use your own filenames and video ID; set `gallery: []` and `video: null` to hide those sections. A gallery image can also be a plain path string. Gallery images display at their natural aspect ratio without cropping. All the overview, responsibilities, features, technical notes, credits and links also come from this same project file.
 

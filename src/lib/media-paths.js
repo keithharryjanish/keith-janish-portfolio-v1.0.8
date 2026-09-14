@@ -35,8 +35,8 @@ export function projectMedia(project) {
     return {
       image: mediaUrl(project.image),
       imageAlt: project.imageAlt || project.title,
-      detailImage: mediaUrl(project.detailImage || project.image),
-      detailImageAlt: project.detailImageAlt || project.imageAlt || project.title,
+      detailImage: mediaUrl(project.heroImage || project.detailImage || project.image),
+      detailImageAlt: (project.heroImage ? project.heroImageAlt : project.detailImageAlt) || project.imageAlt || project.title,
       poster: mediaUrl(project.video?.poster || project.image),
       gallery: (project.gallery || []).map(item => {
         const image = typeof item === 'string' ? {src:item} : item;

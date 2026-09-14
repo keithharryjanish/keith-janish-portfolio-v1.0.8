@@ -9,8 +9,10 @@ export default {
  overview:'Enter a secured nuclear launch facility as a time traveler trying to stop a missile launch. Every 60 seconds, the loop resets. Gather NPC clues, solve connected puzzles, unlock paths, and use what you learned from earlier attempts to reach and disable the missile before time runs out.',
  image:'/media/clockwork-trials.png', imageAlt:'Clockwork Trials title artwork in cream on a burgundy background',
  availability: 'Public playable Windows build',
- // Optional: override the detail banner; otherwise it uses image above.
- detailImage: null,
+ // Hero at the top of this project's page. Use '/media/my-hero.jpg' or an HTTPS image URL.
+ // Leave null to reuse the card image above.
+ heroImage: null,
+ heroImageAlt: '',
  gallery: [],
  links: [
   {label: 'Play Windows build', url: 'https://up-n-at-it-games.itch.io/clockwork-trials', primary: true}
