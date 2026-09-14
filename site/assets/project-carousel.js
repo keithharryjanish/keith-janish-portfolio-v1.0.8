@@ -4,7 +4,6 @@ export function initProjectCarousel(root = document, browser = window) {
   const previous = root.querySelector('[data-carousel-prev]');
   const next = root.querySelector('[data-carousel-next]');
   const position = root.querySelector('[data-carousel-position]');
-  const progress = root.querySelector('[data-carousel-progress]');
   const visibleCards = () => [...track.querySelectorAll('[data-project-tags]')].filter(card => !card.hidden);
   const leftOf = card => card.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
   const motion = () => browser.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
@@ -18,10 +17,6 @@ export function initProjectCarousel(root = document, browser = window) {
       leftOf(card) + card.offsetWidth > track.scrollLeft + 2 &&
       leftOf(card) < track.scrollLeft + track.clientWidth - 2
     );
-    if (progress) {
-      const fraction = cards.length ? (inView.at(-1)?.index + 1 || 0) / cards.length : 0;
-      progress.style.transform = `scaleX(${fraction})`;
-    }
     position.textContent = inView.length
       ? `${inView[0].index + 1}–${inView[inView.length - 1].index + 1} of ${cards.length} projects`
       : 'No projects';

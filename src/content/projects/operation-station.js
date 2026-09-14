@@ -8,6 +8,10 @@ export default {
  description:'A systems-driven Unity prototype about building, defending, and operating a station-sized super weapon.',
  overview:'Build your station and super weapon to destroy the planet. Operation Station connects construction, objectives, station state, and player feedback into a compact build-and-operate loop. The goal is immediately readable, with multiple systems shaping how the player gets there.',
  image:'/media/operation-station.png', imageAlt:'Operation Station official trailer artwork with a planet in space',
+ availability: 'Public playable prototype build',
+ // Optional: override the detail banner; otherwise it uses image above.
+ detailImage: null,
+ gallery: [],
  links: [
   {label: 'Play build', url: 'https://keith-j.itch.io/operation-station', primary: true},
   {label: 'Watch trailer', url: 'https://www.youtube.com/watch?v=9nlNoeEMFZk'}

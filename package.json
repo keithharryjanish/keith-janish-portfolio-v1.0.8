@@ -9,11 +9,11 @@
   "scripts": {
     "dev": "node scripts/generate.js && vite --host 0.0.0.0",
     "build": "node scripts/generate.js && vite build",
-    "preview": "vite preview --host 0.0.0.0",
+    "preview": "npm run build && vite preview --host 0.0.0.0",
     "dev:cloudflare": "npm run build && wrangler dev",
     "deploy": "npm run build && wrangler deploy",
     "deploy:pages": "npm run build && wrangler pages deploy dist",
-    "check": "node scripts/check.js && node scripts/check-filters.js && node scripts/check-carousel.js && node scripts/check-project-registration.js"
+    "check": "node scripts/check.js && node scripts/check-filters.js && node scripts/check-carousel.js && node scripts/check-project-registration.js && node scripts/check-project-media.js"
   },
   "devDependencies": {
     "vite": "^7.3.1",

@@ -9,8 +9,8 @@ export default defineConfig(({command}) => ({
   plugins: [{
     name: 'content-live-reload',
     configureServer(server) {
-      const source = resolve('src') + sep;
-      server.watcher.add(resolve('src'));
+      const sources = ['src', 'public'].map(dir => resolve(dir) + sep);
+      server.watcher.add(['src', 'public'].map(dir => resolve(dir)));
       let timer, running = false, pending = false, closed = false;
       function regenerate() {
         if (closed) return;
@@ -25,7 +25,7 @@ export default defineConfig(({command}) => ({
         });
       }
       const onContent = (event, file) => {
-        if (!['add', 'change', 'unlink'].includes(event) || !file.startsWith(source)) return;
+        if (!['add', 'change', 'unlink'].includes(event) || !sources.some(source => file.startsWith(source))) return;
         clearTimeout(timer);
         timer = setTimeout(regenerate, 100);
       };

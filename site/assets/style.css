@@ -55,8 +55,8 @@
 .carousel-button:active:not(:disabled){transform:scale(.94)}
 .carousel-button:hover:not(:disabled){background:var(--accent);border-color:var(--accent);color:var(--bg)}
 .carousel-button:disabled{opacity:1;cursor:default;background:#1d1d20;border-color:#45454c;color:#9999a2;box-shadow:none}
-.project-list{position:relative;display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100% - 24px)/2);gap:24px;align-items:stretch;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--accent) var(--panel);padding-bottom:18px}
-.project-list::-webkit-scrollbar{height:8px}.project-list::-webkit-scrollbar-track{background:var(--panel)}.project-list::-webkit-scrollbar-thumb{background:var(--accent)}
+.project-list{position:relative;display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100% - 24px)/2);gap:24px;align-items:stretch;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:0}
+.project-list::-webkit-scrollbar{display:none}
 .project-card{display:flex;flex-direction:column;align-items:stretch;min-width:0;height:100%;scroll-snap-align:start;scroll-margin:0}
 .project-copy{flex:1;padding:27px 29px}
 .project-copy h3{font-size:3.1rem}
@@ -91,7 +91,7 @@
 .work .carousel-button:disabled{background:transparent;border-color:var(--line);color:var(--muted);opacity:.45}
 .work .project-list{gap:24px;grid-auto-columns:calc((100% - 24px)/2);padding-bottom:0;scrollbar-width:none}
 .work .project-list::-webkit-scrollbar{display:none}
-.work .project-card{border-radius:0;background:var(--panel);border-color:var(--line);border-top:3px solid var(--accent);overflow:hidden;transition:border-color .2s}
+.work .project-card{border-radius:0;background:var(--panel);border-color:var(--line);overflow:hidden;transition:border-color .2s}
 .work .project-card:hover,.work .project-card:focus-within{border-color:var(--accent)}
 .work .project-card:focus-within{outline-offset:-3px}
 .work .project-visual{aspect-ratio:16/9;border-bottom:1px solid var(--line);background:var(--bg)}
@@ -112,8 +112,6 @@
 .work .card-actions{padding-top:20px;margin-top:20px}
 .work .case-link span{transition:transform .2s}
 .work .project-card:hover .case-link span{transform:translate(2px,-2px)}
-.carousel-progress{height:2px;background:var(--line);margin-top:24px;overflow:hidden}
-.carousel-progress>span{display:block;height:100%;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
 @media(max-width:760px){
  .work .project-list{grid-auto-columns:100%;gap:20px}
  .work .project-copy{padding:24px}
@@ -123,3 +121,8 @@
  .project-open{right:18px;bottom:18px}
 }
 @media(prefers-reduced-motion:reduce){.work .project-card:hover .project-visual img,.work .project-card:focus-within .project-visual img,.work .project-card:hover .case-link span{transform:none}}
+
+.project-gallery{display:grid;gap:28px}
+.project-gallery figure{margin:0;border:1px solid var(--line);background:var(--panel)}
+.project-gallery img{display:block;width:100%;height:auto;object-fit:contain}
+.project-gallery figcaption{padding:12px 16px;font-size:.875rem;color:var(--muted)}

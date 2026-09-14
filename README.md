@@ -18,7 +18,7 @@ npm run dev
 
 5. Open the local address Vite prints (normally http://localhost:5173). Keep the terminal running. Press Ctrl+C to stop.
 
-Content changes inside `src/` regenerate the pages and reload the browser automatically. CSS and browser JavaScript changes also update through Vite. If you change the site configuration, restart the development command.
+Content changes inside `src/` and image changes inside `public/` regenerate the pages and reload the browser automatically. CSS and browser JavaScript changes also update through Vite. If you change the site configuration, restart the development command.
 
 If PowerShell reports that `npm.ps1` cannot run, use `npm.cmd install` and `npm.cmd run dev`, or switch VS Code's terminal to Command Prompt. No system execution-policy change is necessary.
 
@@ -29,7 +29,7 @@ If PowerShell reports that `npm.ps1` cannot run, use `npm.cmd install` and `npm.
 | `npm run dev` | Vite local development with live updates |
 | `npm run build` | Generate HTML and build the complete `dist/` site |
 | `npm run check` | Check the built pages, local links, assets, anchors, and metadata |
-| `npm run preview` | Preview an existing production build |
+| `npm run preview` | Build and preview the latest content |
 | `npm run dev:cloudflare` | Build, then serve through Wrangler locally |
 | `npm run deploy` | Build and publish to your Cloudflare Workers account |
 | `npm run deploy:pages` | Build and upload to Cloudflare Pages |
@@ -158,7 +158,7 @@ video: {type: 'file', src: '/media/my-trailer.mp4', mime: 'video/mp4', title: 'P
 
 ## Appearance and artwork
 
-Version 1.0.9 updates the supplied screenshot's neutral charcoal background, muted crimson accents, Barlow Condensed headline, and rectangular portrait. The source hero reads “I build the systems behind the play.” The corresponding dark styling carries through navigation, filters, project pages, and contact.
+Version 1.0.9 updates the supplied screenshot's neutral charcoal background, muted sage accents, Barlow Condensed headline, and rectangular portrait. The source hero reads “I build the systems behind the play.” The corresponding dark styling carries through navigation, filters, project pages, and contact.
 
 Both project images remain the exact supplied Clockwork Trials title card and Operation Station trailer artwork. Artwork fills consistent 16:9 frames using proportional cover scaling; detail captions appear below the image. Video player sizing remains independent.
 
@@ -168,7 +168,7 @@ Run `npm run check` after building to check local assets, links, video configura
 
 The project row shows two cards at a time above 760px, and one on smaller screens. Use the arrow buttons, horizontal swipe/trackpad, or focus the row and use Left/Right, Home, and End. Arrows are disabled when there are no additional cards in that direction. With the current two projects, both fit on desktop. Filtering resets the scroll position and updates the range and arrow states.
 
-The project introduction sentence has been removed. Versioned dark/white/crimson SVG and ICO favicon URLs replace the old icon, with an Apple touch icon and a default favicon.ico fallback.
+The project introduction sentence has been removed. Versioned dark/white/sage SVG and ICO favicon URLs replace the old icon, with an Apple touch icon and a default favicon.ico fallback.
 
 
 ## Add a project
@@ -196,9 +196,37 @@ The build automatically includes every generated project page. The checks follow
 
 ## Project showcase update
 
-Two cards fit the desktop viewport; one fits mobile screens at 760px and below. The section follows the rest of the site's charcoal panels, crimson accents, square edges, thin borders, Barlow Condensed headings, and DM Sans text. Consistent 16:9 artwork, restrained project numbering, a square image arrow, and subtle hover motion keep the project cards distinct within that shared style. All-card links, independent clickable filter tags, video links, URL filters, keyboard browsing, swipe scrolling, and reduced-motion support remain available. The progress line shows how far through the filtered collection you have browsed.
+Two cards fit the desktop viewport; one fits mobile screens at 760px and below. The section follows the rest of the site's charcoal panels, sage accents, square edges, thin borders, Barlow Condensed headings, and DM Sans text. Consistent 16:9 artwork, restrained project numbering, a square image arrow, and subtle hover motion keep the project cards distinct within that shared style. All-card links, independent clickable filter tags, video links, URL filters, keyboard browsing, swipe scrolling, and reduced-motion support remain available. The range label and arrow controls indicate your position; decorative accent strips and scrollbar lines are removed.
 
 Design references:
 - [Fairground Studio project carousel](https://www.awwwards.com/inspiration/project-carousel-fairground-studio)
 - [W3C carousel controls and announcements](https://www.w3.org/WAI/tutorials/carousels/functionality/)
 - [Vite 7 multi-page builds](https://v7.vite.dev/guide/build.html#multi-page-app)
+
+## Project images and detail content
+
+A project file is the source for its card **and** full detail page. Never copy or edit an `index.html`: HTML in `site/projects/` and `dist/` is automatically generated and excluded from source control.
+
+After copying a project file, change its slug and register the import in `projects.js`. Its existing images will work immediately, including on the nested detail URL. Replace artwork by placing files under `public/media/` and changing these fields in your project `.js`:
+
+```js
+image: '/media/my-new-game.png',       // Card artwork; default detail image/video poster
+imageAlt: 'My game title screen',
+detailImage: '/media/my-game-wide.png', // Optional; null reuses image
+detailImageAlt: 'A wide view of the level',
+gallery: [
+  {src: '/media/my-game-level.png', alt: 'The first level', caption: 'Exploring the first level.'},
+  {src: '/media/my-game-menu.png', alt: 'Main menu'},
+],
+video: {
+  type: 'youtube', id: '9nlNoeEMFZk', title: 'My trailer',
+  poster: '/media/my-trailer-poster.png', // Optional; defaults to image
+},
+availability: 'Public playable prototype build',
+```
+
+Use your own filenames and video ID; set `gallery: []` and `video: null` to hide those sections. A gallery image can also be a plain path string. Gallery images display at their natural aspect ratio without cropping. All the overview, responsibilities, features, technical notes, credits and links also come from this same project file.
+
+`/media/example.png`, `media/example.png`, `public/media/example.png`, and a bare `example.png` all resolve to the same file in `public/media/`. HTTPS image URLs are also supported. Local image filenames are case-sensitive on the host. Missing images stop generation with the project slug and expected path, instead of publishing broken artwork. Replacing an image under the same filename automatically updates its cache version, including the portrait in `profile.js`.
+
+Run `npm run build && npm run check` before publishing. The checks copy Operation Station into a third project, register it, build its real route, and verify its card, detail banner, gallery and video poster assets.

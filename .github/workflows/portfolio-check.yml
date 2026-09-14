@@ -54,10 +54,16 @@ jobs:
                 radius:getComputedStyle(card).borderRadius,
                 headingFont:getComputedStyle(heading).fontFamily,
                 display:root.getPropertyValue('--display').trim(),
-                gradient:getComputedStyle(card).backgroundImage
+                gradient:getComputedStyle(card).backgroundImage,
+                borderTop:getComputedStyle(card).borderTopWidth,
+                scrollbar:getComputedStyle(document.querySelector('#project-track')).scrollbarWidth,
+                progress:document.querySelectorAll('.carousel-progress').length
               };
             });
             assert.equal(styles.radius, '0px');
+            assert.equal(styles.borderTop, '1px');
+            assert.equal(styles.scrollbar, 'none');
+            assert.equal(styles.progress, 0);
             assert.equal(styles.gradient, 'none');
             assert.equal(styles.background, 'rgb(29, 29, 32)');
             assert(styles.headingFont.includes('Barlow Condensed'));
@@ -83,6 +89,9 @@ jobs:
             await page.locator('[data-carousel-next]').click();
             await page.waitForFunction(() => document.querySelector('[data-carousel-position]').textContent.includes('2–2'));
             assert.equal(await inView(), 1);
+            await page.goto('http://127.0.0.1:4173/projects/operation-station/', {waitUntil:'networkidle'});
+            await page.locator('.project-banner img').evaluate(img => img.decode());
+            assert(await page.locator('.project-banner img').evaluate(img => img.naturalWidth > 0));
             console.log('PASS: desktop two-card layout, shared theme, filtering, mobile sizing and navigation.');
           } finally {
             await browser?.close();
