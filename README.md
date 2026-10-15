@@ -2,7 +2,14 @@
 
 # Keith Janish — Gameplay Programmer Portfolio
 
-A complete responsive portfolio built with **plain JavaScript, CSS, npm, and Vite**, with Cloudflare Wrangler support. Includes a homepage, two separate project pages, a custom 404 page, portrait, downloadable résumé, and a click-to-play YouTube trailer. Content is generated into HTML so visitors and search engines can read it without client-side JavaScript.
+A complete responsive portfolio built with **plain JavaScript, CSS, npm, and Vite**, with Cloudflare Wrangler support. Includes a homepage, three separate project pages, a custom 404 page, portrait, downloadable résumé, a YouTube trailer, and a locally hosted Firebase trailer. Content is generated into HTML so visitors and search engines can read it without client-side JavaScript.
+
+
+## Firebase project addition (October 2026)
+
+Firebase is registered first in `src/content/projects.js` and appears at `/projects/firebase/`. Its full project case study is editable in `src/content/projects/firebase.js`. The original supplied thumbnail is `public/media/projects/firebase/thumbnail.png`; the supplied H.264/AAC trailer is `public/media/projects/firebase/trailer.mp4`. The trailer is hosted by the same site and plays in an HTML5 player after the visitor presses Play. The video has `preload="none"` and uses the Firebase artwork as a poster to avoid eagerly transferring its ~22.3 MiB payload. No public playable build URL was supplied, so no play/build link was invented.
+
+At present Cloudflare Workers' 25 MiB per-file static asset limit accommodates the supplied 22.3 MiB trailer. If that limit changes or the video grows, move the MP4 to dedicated media hosting and update `video.src` in the Firebase project file. The project case study describes ongoing development, not a finished public release.
 
 ## Start locally (Windows, macOS, or Linux)
 
@@ -81,6 +88,7 @@ For Pages Git integration, use build command `npm run build` and output director
 | `src/content/education.js` | Degrees, graduation dates, education status |
 | `src/content/projects.js` | Project imports and ordering |
 | `src/content/filter-tags.js` | The only tags visitors are allowed to filter by |
+| `src/content/projects/firebase.js` | All Firebase project content, artwork, and trailer configuration |
 | `src/content/projects/operation-station.js` | All Operation Station project content |
 | `src/content/projects/clockwork-trials.js` | All Clockwork Trials project content |
 | `src/templates/home.js` | Homepage structure |
@@ -88,7 +96,10 @@ For Pages Git integration, use build command `npm run build` and output director
 | `src/templates/shared.js` | Header, footer, contact, HTML helpers |
 | `site/assets/style.css` | Colors, typography, spacing, responsive layouts |
 | `site/assets/main.js` | Mobile navigation, email-copy button, trailer player, project navigation |
-| `public/media/` | Portrait, project images, résumé PDF |
+| `public/media/projects/<slug>/` | Each project’s thumbnail, trailer, and optional gallery files |
+| `public/media/profile/` | Portrait and résumé PDF |
+| `public/icons/` | Current site SVG favicon and Apple touch icon |
+| `public/favicon.ico` | Browser favicon fallback |
 | `vite.config.js` | Build entrypoints and content live-reload |
 | `wrangler.jsonc` | Your Cloudflare Worker name and static asset settings |
 
@@ -98,16 +109,43 @@ The résumé PDF is the exact uploaded document, renamed for a clean download li
 
 External email links open the visitor's mail app. Copy email needs a secure context (HTTPS or localhost). The trailer contacts YouTube only after the visitor presses Play; a direct YouTube link remains available. Google Fonts loads Barlow Condensed and DM Sans; system font fallbacks are provided. All essential images and the résumé are local.
 
+## Media folder layout
+
+Project assets live in their own folder. Files outside a project (portrait and résumé) are kept separate. Only the active site icons remain. The `/media/...` URL prefix is unchanged, so Vite can serve these files directly from `public/` in development and copy them to `dist/` when built.
+
+```text
+public/
+├── favicon.ico
+├── icons/
+│   ├── favicon.svg
+│   └── apple-touch-icon.png
+└── media/
+    ├── profile/
+    │   ├── keith-janish.jpg
+    │   └── Keith_Janish_Resume.pdf
+    └── projects/
+        ├── firebase/
+        │   ├── thumbnail.png
+        │   └── trailer.mp4
+        ├── clockwork-trials/
+        │   └── thumbnail.png
+        └── operation-station/
+            └── thumbnail.png
+```
+
+When adding a project, make `public/media/projects/<slug>/` and keep its screenshots, trailers, and thumbnails together. Update only that project's file in `src/content/projects/`; do not modify generated HTML. The actual media bytes have not been changed, only their paths and filenames.
+
 ## Research and media
 
 Portfolio structure applies Riot's advice to focus on selected work, readable case studies, and accessible presentation:
 https://www.riotgames.com/en/portfolio-and-reel-suggestions
 
+- Firebase thumbnail and original MP4 trailer: supplied by Keith Janish for this project addition.
 - Operation Station artwork: supplied by Keith Janish for this redesign.
 - Clockwork Trials title artwork: supplied by Keith Janish for this redesign.
 - Portrait and résumé: provided by Keith Janish.
 
-Both project images use the newly supplied artwork without altering the files. Cards and detail pages use matching 16:9 artwork frames. Images scale proportionally to fill them, with centered cropping where needed and no distortion. Detail-page captions sit below the artwork. The portrait is displayed with CSS cropping; its original file is preserved.
+The project images use their supplied artwork without altering the files. Cards and detail pages use matching 16:9 artwork frames. Images scale proportionally to fill them, with centered cropping where needed and no distortion. Detail-page captions sit below the artwork. The portrait is displayed with CSS cropping; its original file is preserved.
 
 ## Display tags versus filter tags
 
@@ -136,6 +174,32 @@ All of a project's tags are displayed. Only tags also included in `filterableTag
 
 Metadata such as `engine` and `language` never adds filter options automatically. Tag spelling and capitalization must match. Duplicate or empty filter entries are ignored. A manually edited or old URL containing a disallowed tag resets to All projects and removes that tag parameter.
 
+## Asset folder organization
+
+Each project has its own media directory. Personal documents and site icons stay separate. Vite serves URLs below `public/` from the site root and preserves this structure in production builds.
+
+```text
+public/
+├── favicon.ico
+├── icons/
+│   ├── favicon.svg
+│   └── apple-touch-icon.png
+└── media/
+    ├── profile/
+    │   ├── keith-janish.jpg
+    │   └── Keith_Janish_Resume.pdf
+    └── projects/
+        ├── firebase/
+        │   ├── thumbnail.png
+        │   └── trailer.mp4
+        ├── clockwork-trials/
+        │   └── thumbnail.png
+        └── operation-station/
+            └── thumbnail.png
+```
+
+To add a project, create `public/media/projects/<your-slug>/` and place its thumbnail, gameplay screenshots, and optional trailer there. Register the paths inside its `src/content/projects/<your-slug>.js`. All existing media retains its original contents; only locations and names changed.
+
 ## Project links and optional videos
 
 Each project also contains:
@@ -148,33 +212,33 @@ links: [
 video: {type: 'youtube', id: '9nlNoeEMFZk', title: 'Project trailer'},
 ```
 
-Add/remove/reorder the `links` array to control overview links and quick-access buttons. Set `links: []` to hide the link group. Set `video: null` to hide the video player and video navigation. Adding a trailer link alone does not create a player. Clockwork Trials has no assigned video; Operation Station has its provided trailer.
+Add/remove/reorder the `links` array to control overview links and quick-access buttons. Set `links: []` to hide the link group. Set `video: null` to hide the video player and video navigation. Adding a trailer link alone does not create a player. Clockwork Trials has no assigned video; Operation Station uses YouTube and Firebase uses its supplied local MP4.
 
-For a local MP4 in `public/media/`:
+For a local MP4 in that project’s `public/media/projects/<slug>/` folder:
 
 ```js
-video: {type: 'file', src: '/media/my-trailer.mp4', mime: 'video/mp4', title: 'Project trailer'},
+video: {type: 'file', src: '/media/projects/my-new-game/trailer.mp4', mime: 'video/mp4', title: 'Project trailer'},
 ```
 
 ## Appearance and artwork
 
 Version 1.0.9 updates the supplied screenshot's neutral charcoal background, muted steel-blue accents, Barlow Condensed headline, and rectangular portrait. The source hero reads “I build the systems behind the play.” The corresponding dark styling carries through navigation, filters, project pages, and contact.
 
-Both project images remain the exact supplied Clockwork Trials title card and Operation Station trailer artwork. Artwork fills consistent 16:9 frames using proportional cover scaling; detail captions appear below the image. Video player sizing remains independent.
+The project images remain the supplied Firebase, Clockwork Trials, and Operation Station artwork. Artwork fills consistent 16:9 frames using proportional cover scaling; detail captions appear below the image. Video player sizing remains independent.
 
 Run `npm run check` after building to check local assets, links, video configuration, separate filter configuration, and the production filter event handlers.
 
 ## Project scrolling
 
-The project row shows two cards at a time above 760px, and one on smaller screens. Use the arrow buttons, horizontal swipe/trackpad, or focus the row and use Left/Right, Home, and End. Arrows are disabled when there are no additional cards in that direction. With the current two projects, both fit on desktop. Filtering resets the scroll position and updates the range and arrow states.
+The project row shows two cards at a time above 760px, and one on smaller screens. Use the arrow buttons, horizontal swipe/trackpad, or focus the row and use Left/Right, Home, and End. Arrows are disabled when there are no additional cards in that direction. With three projects, two cards are visible at a time on desktop and the arrows reveal the remaining project. Filtering resets the scroll position and updates the range and arrow states.
 
-The project introduction sentence has been removed. Versioned dark/white/steel-blue SVG and ICO favicon URLs replace the old icon, with an Apple touch icon and a default favicon.ico fallback.
+The project introduction sentence has been removed. Current icons are consolidated at `public/icons/favicon.svg`, `public/icons/apple-touch-icon.png`, and the standard `public/favicon.ico` fallback. Obsolete v107/v109 filenames and an unused SVG were removed.
 
 
 ## Add a project
 
 1. Copy `src/content/projects/operation-station.js` to a new file, such as `src/content/projects/my-new-game.js`.
-2. Replace its content and use a unique lowercase, hyphenated slug, such as `my-new-game`. Put artwork in `public/media/` and reference it as `/media/my-new-game.png`. Set `video: null` if it has no video.
+2. Replace its content and use a unique lowercase, hyphenated slug, such as `my-new-game`. Put artwork in `public/media/projects/my-new-game/` and reference it as `/media/projects/my-new-game/thumbnail.png`. Set `video: null` if it has no video.
 3. Register the file in **src/content/projects.js**:
 
 ```js
@@ -207,20 +271,20 @@ Design references:
 
 A project file is the source for its card **and** full detail page. Never copy or edit an `index.html`: HTML in `site/projects/` and `dist/` is automatically generated and excluded from source control.
 
-After copying a project file, change its slug and register the import in `projects.js`. Its existing images will work immediately, including on the nested detail URL. Replace artwork by placing files under `public/media/` and changing these fields in your project `.js`:
+After copying a project file, change its slug and register the import in `projects.js`. Its existing images will work immediately, including on the nested detail URL. Replace artwork by placing files under `public/media/projects/my-new-game/` and changing these fields in your project `.js`:
 
 ```js
-image: '/media/my-new-game.png',       // Card artwork; default detail image/video poster
+image: '/media/projects/my-new-game/thumbnail.png',       // Card artwork; default detail image/video poster
 imageAlt: 'My game title screen',
-heroImage: '/media/my-game-wide.png', // Hero at top of project detail page; null reuses image
+heroImage: '/media/projects/my-new-game/hero.png', // Hero at top of project detail page; null reuses image
 heroImageAlt: 'A wide view of the level',
 gallery: [
-  {src: '/media/my-game-level.png', alt: 'The first level', caption: 'Exploring the first level.'},
-  {src: '/media/my-game-menu.png', alt: 'Main menu'},
+  {src: '/media/projects/my-new-game/level.png', alt: 'The first level', caption: 'Exploring the first level.'},
+  {src: '/media/projects/my-new-game/menu.png', alt: 'Main menu'},
 ],
 video: {
   type: 'youtube', id: '9nlNoeEMFZk', title: 'My trailer',
-  poster: '/media/my-trailer-poster.png', // Optional; defaults to image
+  poster: '/media/projects/my-new-game/trailer-poster.png', // Optional; defaults to image
 },
 availability: 'Public playable prototype build',
 ```
@@ -229,6 +293,6 @@ Set `heroImage` in each individual project file to a local image path or a direc
 
 Use your own filenames and video ID; set `gallery: []` and `video: null` to hide those sections. A gallery image can also be a plain path string. Gallery images display at their natural aspect ratio without cropping. All the overview, responsibilities, features, technical notes, credits and links also come from this same project file.
 
-`/media/example.png`, `media/example.png`, `public/media/example.png`, and a bare `example.png` all resolve to the same file in `public/media/`. HTTPS image URLs are also supported. Local image filenames are case-sensitive on the host. Missing images stop generation with the project slug and expected path, instead of publishing broken artwork. Replacing an image under the same filename automatically updates its cache version, including the portrait in `profile.js`.
+`/media/projects/my-new-game/thumbnail.png`, `media/projects/my-new-game/thumbnail.png`, and `public/media/projects/my-new-game/thumbnail.png` all resolve to the same public asset. HTTPS image URLs are also supported. Local image filenames are case-sensitive on the host. Missing images stop generation with the project slug and expected path, instead of publishing broken artwork. Replacing an image under the same filename automatically updates its cache version, including the portrait in `profile.js`.
 
 Run `npm run build && npm run check` before publishing. The checks copy Operation Station into a third project, register it, build its real route, and verify its card, detail banner, gallery and video poster assets.

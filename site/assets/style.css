@@ -131,3 +131,7 @@
 .carousel-progress{height:2px;background:var(--line);margin-top:24px;overflow:hidden}
 .carousel-progress>span{display:block;height:100%;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
 @media(prefers-reduced-motion:reduce){.carousel-progress>span{transition:none}}
+
+/* Keep the supplied wide Firebase wordmark visible in 16:9 project frames. */
+.work .project-card.firebase .project-visual, .project-banner.firebase { background: #1b1b1d; }
+.work .project-card.firebase .project-visual img, .project-banner.firebase img { object-fit: contain; object-position: center; }

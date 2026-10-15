@@ -1,8 +1,8 @@
 # Keith Janish Portfolio — v1.0.9
 
-This version keeps the established dark-and-white layout with a muted crimson accent.
+This version keeps the existing charcoal, white, and steel-blue portfolio design.
 
-1. Extract `Keith_Janish_Portfolio_v1.0.9.zip` into a NEW folder.
+1. Extract this ZIP into a new folder.
 2. Open the folder containing `package.json` in VS Code.
 3. Run `npm install`, then `npm run dev`.
 4. Open the local URL Vite prints. Do not double-click the HTML files.
@@ -19,7 +19,7 @@ This list alone controls the available filter buttons.
 
 ## Assign tags to each project
 
-Edit **`src/content/projects/operation-station.js`** or **`src/content/projects/clockwork-trials.js`**:
+Edit **`src/content/projects/firebase.js`**, **`src/content/projects/operation-station.js`**, or **`src/content/projects/clockwork-trials.js`**:
 
 ```js
 export const tags = ['Unity', 'C#', 'Gameplay systems', 'Prototype'];
@@ -27,7 +27,7 @@ export const tags = ['Unity', 'C#', 'Gameplay systems', 'Prototype'];
 
 All these tags are displayed on the project. Only those also present in `filterableTags` can filter projects. For example, Prototype stays a plain badge until you add it to `filter-tags.js`.
 
-The artwork, overview `links` arrays, and optional `video` settings are preserved. Clockwork Trials has `video: null`; Operation Station has its assigned trailer.
+The artwork, overview `links` arrays, and optional `video` settings are preserved. Clockwork Trials has `video: null`; Operation Station uses YouTube, and Firebase uses the supplied local MP4 trailer and thumbnail. Edit the Firebase content at `src/content/projects/firebase.js`.
 
 ## Cloudflare
 
@@ -35,8 +35,8 @@ Run `npx wrangler login`, then `npm run deploy` for your Cloudflare Worker. For 
 
 The previously shared hosted preview is an earlier publication. Use this package's local Vite URL to see version 1.0.9, or deploy this package to your own Cloudflare site.
 
-Version 1.0.9 adds circular project navigation buttons with clean SVG arrows and uses the supplied KJ favicon design, recolored to match the palette, with matching ICO and Apple touch versions.
+The unused icon versions were removed. Current icons live in `public/icons/`, with `public/favicon.ico` as the browser fallback. Project artwork and trailers live in `public/media/projects/<slug>/`; the résumé and portrait live in `public/media/profile/`. Update the matching project JS file when adding media.
 
 Version 1.0.9 removes the gap beneath embedded video and makes each full project card a link. Filter tags and Watch video keep their separate actions.
 
-Version 1.0.9 keeps the dark-and-white design and replaces orange with muted crimson (#e47786). No blue accent is used. Layout, artwork, project filters, full-card links, and video behavior are preserved.
+The dark-and-white layout with steel-blue accents, project filters, full-card links, and video behavior are preserved.

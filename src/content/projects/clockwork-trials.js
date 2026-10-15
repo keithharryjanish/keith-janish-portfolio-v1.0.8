@@ -7,7 +7,7 @@ export default {
  summary:'One facility. A missile launch. Sixty seconds to change the outcome.',
  description:'A first-person time-loop puzzle game about stopping a nuclear missile launch inside a secured facility.',
  overview:'Enter a secured nuclear launch facility as a time traveler trying to stop a missile launch. Every 60 seconds, the loop resets. Gather NPC clues, solve connected puzzles, unlock paths, and use what you learned from earlier attempts to reach and disable the missile before time runs out.',
- image:'/media/clockwork-trials.png', imageAlt:'Clockwork Trials title artwork in cream on a burgundy background',
+ image:'/media/projects/clockwork-trials/thumbnail.png', imageAlt:'Clockwork Trials title artwork in cream on a burgundy background',
  availability: 'Public playable Windows build',
  // Hero at the top of this project's page. Use '/media/my-hero.jpg' or an HTTPS image URL.
  // Leave null to reuse the card image above.

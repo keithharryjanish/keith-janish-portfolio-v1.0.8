@@ -7,7 +7,7 @@ export default {
  summary:'Build the station. Manage the threat. Fire the super weapon.',
  description:'A systems-driven Unity prototype about building, defending, and operating a station-sized super weapon.',
  overview:'Build your station and super weapon to destroy the planet. Operation Station connects construction, objectives, station state, and player feedback into a compact build-and-operate loop. The goal is immediately readable, with multiple systems shaping how the player gets there.',
- image:'/media/operation-station.png', imageAlt:'Operation Station official trailer artwork with a planet in space',
+ image:'/media/projects/operation-station/thumbnail.png', imageAlt:'Operation Station official trailer artwork with a planet in space',
  availability: 'Public playable prototype build',
  // Hero at the top of this project's page. Use '/media/my-hero.jpg' or an HTTPS image URL.
  // Leave null to reuse the card image above.

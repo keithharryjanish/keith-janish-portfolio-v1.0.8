@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {initProjectFilters} from '../site/assets/project-filters.js';
 import {home} from '../src/templates/home.js';
+import {projects} from '../src/content/projects.js';
 
 // Exercise the production event handlers against the actual generated tag data.
 const html = home();
@@ -34,11 +35,12 @@ initProjectFilters(root, browser);
 assert(chips.every(chip => !chip.disabled));
 assert(cards.every(card => !card.hidden));
 const click = tag => chips.find(chip => chip.dataset.filter === tag).click();
+const expectedHidden = tag => projects.map(project => !project.tags.includes(tag));
 click('Unity');
-assert.deepEqual(cards.map(card => card.hidden), [false, true]);
-assert.equal(status.textContent, 'Showing 1 of 2 projects · Unity');
+assert.deepEqual(cards.map(card => card.hidden), expectedHidden('Unity'));
+assert.equal(status.textContent, `Showing ${projects.filter(project => project.tags.includes('Unity')).length} of ${projects.length} projects · Unity`);
 click('Unreal Engine');
-assert.deepEqual(cards.map(card => card.hidden), [true, false]);
+assert.deepEqual(cards.map(card => card.hidden), expectedHidden('Unreal Engine'));
 click('C++');
 assert.equal(new URL(browser.location.href).searchParams.get('tag'), 'C++');
 assert.equal(chips.find(chip => chip.dataset.filter === 'C++').attributes['aria-pressed'], 'true');
@@ -46,10 +48,10 @@ click('');
 assert(cards.every(card => !card.hidden));
 assert(!new URL(browser.location.href).searchParams.has('tag'));
 links.find(link => link.dataset.projectTag === 'Unity').click();
-assert.deepEqual(cards.map(card => card.hidden), [false, true]);
+assert.deepEqual(cards.map(card => card.hidden), expectedHidden('Unity'));
 browser.location.href = 'https://test.local/?tag=Unreal%20Engine#projects';
 browser.dispatchEvent(new Event('popstate'));
-assert.deepEqual(cards.map(card => card.hidden), [true, false]);
+assert.deepEqual(cards.map(card => card.hidden), expectedHidden('Unreal Engine'));
 browser.location.href = 'https://test.local/?tag=Missing#projects';
 browser.dispatchEvent(new Event('popstate'));
 assert(cards.every(card => !card.hidden));
